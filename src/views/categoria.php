@@ -53,16 +53,20 @@
                                 <td>
                                     <select name='palabra'>".
                                         $consulta = "SELECT español FROM palabra WHERE idCategoria=".$_POST['categoria'];
-                                        $resultado = mysqli_query($conexion, $consulta);
+                                        $resultado2 = mysqli_query($conexion, $consulta);
                                         
-                                        while($fila=$resultado->fetch_assoc()){
-                                            echo "<option value=".$fila['idPalabra'].">".$fila['español']."</option>";//plan de pruebas, siempre me sale en el select de español los animales cuando deberia vatiar en funcion de la categoria escogida
+                                        while($fila=$resultado2->fetch_assoc()){
+                                            echo "<option name=".$fila['español']." value=".$fila['idPalabra'].">".$fila['español']."</option>";//plan de pruebas, siempre me sale en el select de español los animales cuando deberia vatiar en funcion de la categoria escogida
                                         }
                                     "</select>
                                 </td>
                             </tr>";
                     }
-                    echo    "</table>";
+                    echo    "</table>
+                            <form action='#' method='post'>
+                                <button type='submit' name='enviar2'>Enviar</button>
+                            </form>
+                        ";
                 }
             ?>
         </main>

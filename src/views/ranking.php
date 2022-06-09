@@ -23,21 +23,21 @@
         <main>
             <?php
                 include('../configuracion/configdb.php');
-                $consulta = "SELECT * FROM realiza WHERE puntuacion>=8";
+                $consulta = "SELECT usuario.nombre,actividad.nombre,puntuacion,fecha FROM usuario inner join realiza on usuario.idUsuario=realiza.idUsuario inner join actividad on realiza.idActividad=actividad.idActividad WHERE puntuacion>=8";
                 $resultado = mysqli_query($conexion, $consulta);
                 echo    "
                         <table>
                             <tr>
-                                <th>idUsuario</th>
-                                <th>idActividad</th>
+                                <th>nombreUsuario</th>
+                                <th>nombreActividad</th>
                                 <th>puntuacion</th>
                                 <th>fecha</th>
                             </tr>
                         ";
                 while($fila=$resultado->fetch_assoc()) {
                     echo "<tr>
-                            <td>".$fila['idUsuario']."</td>
-                            <td>".$fila['idActividad']."</td>
+                            <td>".$fila['nombre']."</td>
+                            <td>".$fila['nombre']."</td>
                             <td>".$fila['puntuacion']."</td>
                             <td>".$fila['fecha']."</td>
                         </tr>";
