@@ -50,44 +50,59 @@
                         }
                     ?>
                 </select>
-                <button type="submit" name="mostrar">Mostrar categorías</button>
+                <button type="submit" name="mostrar">Mostrar</button>
             </form>
             <?php
+
                 if(isset($_POST['mostrar'])){
-                    print_r($_POST['categoria']);
+                    $consulta3="INSERT INTO actividad( fechaHora, nombre, idCategoria) VALUES (now(),'".$_POST['nombreActividad']."','".$_POST['categoria']."')";
+                    $resultado3 = mysqli_query($conexion, $consulta3);
+                    if($resultado3){
+                        $idActividad=$conexion->insert_id;
+                        echo $idActividad;
+                    }
+                    //print_r($_POST['categoria']);
                     $consulta = "SELECT ingles, idCategoria  from palabra 
                     where idCategoria='".$_POST['categoria']."';";
                      $resultado = mysqli_query($conexion, $consulta);
-                echo    "<form action='#' method='post'>
+                    echo "<form action='#' method='post'>
                             <table>
-                            ";
-                            
-                            $i=0;
-                            $consulta = "SELECT ingles FROM palabra WHERE idCategoria=".$_POST['categoria']."';";
-                            $resultado = mysqli_query($conexion, $consulta);
-                            $conexion->error;
-                            while($fila=$resultado->fetch_assoc()){
-                                
-                                echo "<tr>
-                                <td><label> palabra$i</label> </td>
-                                <td>";
-                                $consulta2 = "SELECT ingles FROM palabra WHERE idCategoria=1;";
-                                $resultado2 = mysqli_query($conexion, $consulta2);
-                                $conexion->error;
-                                while($fila2=$resultado2->fetch_assoc()){
-                                    echo "<select name='ingles[$i]'>
-                                        <option name=".$fila2['ingles']." >".$fila2['ingles']."</option>";
-                                }
-                                    echo "</select>
-                                            </td>
-                                        </tr>";
-                            $i=$i+1;
-                            }
+                    ";   
+                    $i=1;
+                    while($fila=$resultado->fetch_assoc()){//for
+                        echo "<tr>
+                        <td><label> palabra$i</label> </td>
+                        <td>
+                        <select name='ingles[$i]'>";
+                        $consulta2 = "SELECT idPalabra,ingles FROM palabra WHERE idCategoria='".$_POST['categoria']."';";
+                        $resultado2 = mysqli_query($conexion, $consulta2);
+                        $conexion->error;
+                        while($fila2=$resultado2->fetch_assoc()){
+                            echo "
+                                <option value=".$fila2['idPalabra']." >".$fila2['ingles']."</option>";
+                        }
+                            echo "</select>
+                                    </td>
+                                </tr>";
+                    $i=$i+1;
+                    }
                      echo "  </table>
+                            <input type='hidden' name='idActividad' value='".$idActividad."'>
                              <button type='submit' name='crear'>Crear</button>
                          </form>
                          ";
                 }   
+                if(isset($_POST['crear'])){
+                    print_r($_POST['ingles']);
+                   for($i=1;$i<=10;$i++){
+                    $consulta4="INSERT INTO aparece(idActividad, idPalabra) VALUES ('".$_POST['idActividad']."','".$_POST['ingles'][$i]."')";
+                    $resultado4 = mysqli_query($conexion, $consulta4);
+                    if(!$resultado4){
+                        echo"he fallado";
+                    }
+                   }
+                           
+                }
             ?>
         </main>
   </body>

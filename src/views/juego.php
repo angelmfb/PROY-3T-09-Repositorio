@@ -118,7 +118,7 @@
                         echo $_POST['idActividad'];
                         $consulta4="INSERT INTO realiza(idUsuario, idActividad, puntuacion, fecha)
                         VALUES ('".$_SESSION['idUsuario']."','".$_POST['idActividad']."',$puntos,now());"; 
-                         $resul4=mysqli_query($conexion, $consulta4);
+                        $resul4=mysqli_query($conexion, $consulta4);
                     }
                     header('Location: ranking.php');
                     
