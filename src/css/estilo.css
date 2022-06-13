@@ -79,7 +79,7 @@
   
   
   form{
-    margin:5% 0 0 40%;
+    margin:1% 0 0 40%;
   }
   
   input[type=submit] {
@@ -104,4 +104,8 @@ p.error {
  
 p.error {
     background: orangered;
+}
+
+h4{
+  text-align: center;
 }

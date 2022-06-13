@@ -1,3 +1,6 @@
+<?php
+     session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -16,14 +19,24 @@
         <nav>
             <ul>
                 <li id="alineacion"><a href="../index.html">Inicio</a></li>
-                <li class="alineacion2"><a href="categoria.php">Categoría</a></li>
+                <li class="alineacion2"><a href="juego.php">Juego</a></li>
                 <li><a href="ranking.php">Ranking</a></li>
+                <?php
+                if($_SESSION){
+                    echo "<li><a href='login.php'>Cerrar Sesion</a></li>";
+                    if($_SESSION['tipo']=='a'){
+                       echo "<li><a href='crear.php'>Crear</a></li>";
+                    }
+                }
+                ?>
             </ul>
+            
         </nav>
         <main>
             <?php
                 include('../configuracion/configdb.php');
-                $consulta = "SELECT usuario.nombre,actividad.nombre,puntuacion,fecha FROM usuario inner join realiza on usuario.idUsuario=realiza.idUsuario inner join actividad on realiza.idActividad=actividad.idActividad WHERE puntuacion>=8";
+               
+                $consulta = "SELECT usuario.nombre as 'usuarioNombre',actividad.nombre,puntuacion,fecha FROM usuario inner join realiza on usuario.idUsuario=realiza.idUsuario inner join actividad on realiza.idActividad=actividad.idActividad WHERE puntuacion>=80";
                 $resultado = mysqli_query($conexion, $consulta);
                 echo    "
                         <table>
@@ -36,7 +49,7 @@
                         ";
                 while($fila=$resultado->fetch_assoc()) {
                     echo "<tr>
-                            <td>".$fila['nombre']."</td>
+                            <td>".$fila['usuarioNombre']."</td>
                             <td>".$fila['nombre']."</td>
                             <td>".$fila['puntuacion']."</td>
                             <td>".$fila['fecha']."</td>
