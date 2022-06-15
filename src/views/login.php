@@ -2,7 +2,12 @@
     if(isset($_SESSION['idUsuario'])){
         session_destroy();
     }
-   
+   /*
+    Para el login de usuarios:
+    usuario:admin   contraseña:1234
+    usuario:juan    contraseña:1234
+    */
+   */
     include('../configuracion/configdb.php');
     session_start();
     
